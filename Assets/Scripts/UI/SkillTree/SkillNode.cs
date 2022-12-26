@@ -38,7 +38,7 @@ public class SkillNode : MonoBehaviour
         }
     }
 
-    public void SetSctive(bool value)
+    public void SetActive(bool value)
     {
         _button.interactable = value;
     }
@@ -60,7 +60,7 @@ public class SkillNode : MonoBehaviour
     {
         if (_isDiscovered)
         {
-            SetSctive(true);
+            SetActive(true);
             return;
         }
 
@@ -68,12 +68,12 @@ public class SkillNode : MonoBehaviour
         {
             if (node.IsDiscovered)
             {
-                SetSctive(true);
+                SetActive(true);
                 return;
             }
         }
 
-        SetSctive(false);
+        SetActive(false);
     }
 
     #region Editor

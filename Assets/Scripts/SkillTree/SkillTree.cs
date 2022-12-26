@@ -43,7 +43,7 @@ public class SkillTree : MonoBehaviour
 
     private void Start()
     {
-        _baseNode.SetSctive(true);
+        _baseNode.SetActive(true);
         _player.AddSkill(_baseNode.Data.Skill);
         _baseNode.Discover();
 
@@ -100,7 +100,7 @@ public class SkillTree : MonoBehaviour
             OpenDiscoveryMenu();
             foreach (var node in _nodes)
             {
-                node.SetSctive(false);
+                node.SetActive(false);
             }
             return true;
         }
@@ -133,7 +133,7 @@ public class SkillTree : MonoBehaviour
             OpenRecoveryMenu();
             foreach (var node in _nodes)
             {
-                node.SetSctive(false);
+                node.SetActive(false);
             }
             return true;
         }
@@ -185,9 +185,9 @@ public class SkillTree : MonoBehaviour
 
                 exclude.Add(node);
 
-                if (connection.IsDiscovered && TryReachBaseNode(connection, exclude))
+                if (connection.IsDiscovered)
                 {
-                    return true;
+                    return TryReachBaseNode(connection, exclude);
                 }
             }
         }
@@ -214,7 +214,6 @@ public class SkillTree : MonoBehaviour
 
     private void ReinitializeNodes()
     {
-
         _edges = new int[_nodes.Length][];
 
         for (int i = 0; i < _nodes.Length; i++)
