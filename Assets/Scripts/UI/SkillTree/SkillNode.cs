@@ -56,7 +56,7 @@ public class SkillNode : MonoBehaviour
         _outline.enabled = false;
     }
 
-    public void Initialize()
+    public void UpdateState()
     {
         if (_isDiscovered)
         {
@@ -172,4 +172,11 @@ public class SkillNode : MonoBehaviour
     }
 #endif
     #endregion
+}
+
+public enum NodeState
+{
+    NotActive,
+    Active,
+    Discovered
 }

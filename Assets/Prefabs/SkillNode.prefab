@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9188592042793247210}
   - component: {fileID: 5762123624219029889}
   - component: {fileID: 5991454436597007046}
+  - component: {fileID: 1983664405323255263}
   m_Layer: 5
   m_Name: SkillNode
   m_TagString: Untagged
@@ -196,6 +197,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26859c7031dbbbd4eb7e26a0ec340770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1983664405323255263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5208386737857184396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a007eb284a3694bb1b09d4fa8be5c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hoverSound: {fileID: 8300000, guid: 6c7322cdd390c4e489d7a7887dd09871, type: 3}
+  _clickSound: {fileID: 8300000, guid: 74cd74b2092dd2b49baa886b539232e7, type: 3}
 --- !u!1 &6533609727468956061
 GameObject:
   m_ObjectHideFlags: 0

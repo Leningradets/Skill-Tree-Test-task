@@ -64,25 +64,28 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HidherTreshold: 1
-    - _LowerTreshold: 0
+    - _HidherTreshold: 0.773
+    - _LowerTreshold: 0.123
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Speed: 4.5
     - _SrcBlend: 1
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
-    - _StrokeFrequency: 1
+    - _StrokeFrequency: 0.3
     - _UVSec: 0
     - _UseUIAlphaClip: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.6039216, g: 0.5254902, b: 0.45098042, a: 1}
+    - _Color1: {r: 0.6039216, g: 0.5254902, b: 0.44705886, a: 1}
+    - _Color2: {r: 0.4811321, g: 0.4209906, b: 0.36084908, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

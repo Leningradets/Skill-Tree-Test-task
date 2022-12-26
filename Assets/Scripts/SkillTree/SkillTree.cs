@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EdgeDrawer))]
 public class SkillTree : MonoBehaviour
 {
+    public SkillNode[] Nodes => _nodes;
+    public int[][] Edges => _edges;
+
     [SerializeField] private Player _player;
     [SerializeField] private SkillNode _baseNode;
     [SerializeField] private BinaryMenu _discoveryMenu;
@@ -18,12 +20,9 @@ public class SkillTree : MonoBehaviour
     private SkillNode _discoveringSkillNode;
     private SkillNode _recoveringSkillNode;
 
-    private EdgeDrawer _edgeDrawer;
-
     private void Awake()
     {
         _nodes = GetComponentsInChildren<SkillNode>();
-        _edgeDrawer = GetComponent<EdgeDrawer>();
     }
 
     private void OnEnable()
@@ -48,8 +47,7 @@ public class SkillTree : MonoBehaviour
         _player.AddSkill(_baseNode.Data.Skill);
         _baseNode.Discover();
 
-        InitializeNodes();
-        _edgeDrawer.DrawEdges(_nodes, _edges);
+        ReinitializeNodes();
     }
 
     private int[] GetConnectionsArray(SkillNode node)
@@ -124,7 +122,7 @@ public class SkillTree : MonoBehaviour
             _discoveringSkillNode.Discover();
         }
 
-        InitializeNodes();
+        ReinitializeNodes();
     }
 
     public bool TryRecoverSkill(SkillNode skillNode)
@@ -160,15 +158,13 @@ public class SkillTree : MonoBehaviour
             var excludeList = new List<SkillNode>();
             excludeList.Add(node);
 
-            if (TryReachBaseNode(connection, excludeList))
+            if (!TryReachBaseNode(connection, excludeList))
             {
-                return true;
+                return false;
             }
-
-            break;
         }
 
-        return false;
+        return true;
     }
 
     private bool TryReachBaseNode(SkillNode node, List<SkillNode> exclude)
@@ -213,18 +209,35 @@ public class SkillTree : MonoBehaviour
             _recoveringSkillNode.Recover();
         }
 
-        InitializeNodes();
+        ReinitializeNodes();
     }
 
-    private void InitializeNodes()
+    private void ReinitializeNodes()
     {
 
         _edges = new int[_nodes.Length][];
 
         for (int i = 0; i < _nodes.Length; i++)
         {
-            _nodes[i].Initialize();
+            _nodes[i].UpdateState();
             _edges[i] = GetConnectionsArray(_nodes[i]);
         }
+    }
+
+    public void RecoverAll()
+    {
+        foreach (var node in _nodes)
+        {
+            if (node.IsDiscovered)
+            {
+                if (node != _baseNode)
+                {
+                    node.Recover();
+                    _player.AddPoints(node.Data.Cost);
+                }
+            }
+        }
+
+        ReinitializeNodes();
     }
 }

@@ -4,7 +4,10 @@ Shader "UI/Stroke"
 {
     Properties
     {
-        _Color ("Tint", Color) = (1,1,1,1)
+        _Color1 ("Color1", Color) = (1,1,1,1)
+        _Color2 ("Color2", Color) = (1,1,1,0)
+        _Speed("Speed", float) = 1.5
+
         _StrokeFrequency ("Stroke Frequency", float) = 1
         _LowerTreshold ("Lower treshold", Range(0,1)) = 0.3
         _HidherTreshold ("Higher treshold", Range(0,1)) = 0.6
@@ -72,13 +75,16 @@ Shader "UI/Stroke"
             struct v2f
             {
                 float4 vertex   : SV_POSITION;
-                fixed4 color    : COLOR;
+                fixed4 color1    : COLOR;
+                fixed4 color2    : COLOR1;
                 float2 texcoord  : TEXCOORD0;
                 float4 worldPosition : TEXCOORD1;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            fixed4 _Color;
+            fixed4 _Color1;
+            fixed4 _Color2;
+            float _Speed;
             fixed _StrokeFrequency;
             float _LowerTreshold;
             float _HidherTreshold;
@@ -96,14 +102,16 @@ Shader "UI/Stroke"
 
                 OUT.texcoord = v.texcoord;
 
-                OUT.color = v.color * _Color;
+                OUT.color1 = v.color * _Color1;
+                OUT.color2 = v.color * _Color2;
                 return OUT;
             }
 
             fixed4 frag(v2f IN) : SV_Target
             {
-                half4 color =  sin(IN.texcoord.y * _StrokeFrequency) * 0.5f + 0.5f;
-                color = smoothstep(_LowerTreshold, _HidherTreshold, color) * IN.color;
+                half4 color = sin((IN.texcoord.y - _Time.y * _Speed) * _StrokeFrequency) * 0.5 + 0.5;
+                color = smoothstep(_LowerTreshold, _HidherTreshold, color);
+                color = lerp(IN.color1, IN.color2, color);
 
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
